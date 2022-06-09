@@ -6,11 +6,15 @@ import punycode from "punycode";
 
 export default function App() {
   const [domain, setDomain] = useState();
+  const [lastDomain, setLastDomain] = useState();
   const [domainData, setDomainData] = useState([]);
 
   async function checker() {
-    let data = await threenom(punycode.toASCII(domain));
-    setDomainData(data);
+    if (lastDomain !== domain) {
+      setLastDomain(domain);
+      let data = await threenom(punycode.toASCII(domain));
+      setDomainData(data);
+    }
   }
 
   function availability(item) {
